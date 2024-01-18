@@ -1,6 +1,6 @@
 # Nift Flow SDK Docs
 
-Nift current makes a number of SDKs for our partners. Currently we support Android, iOS, and React Native.
+Nift currently makes a number of SDKs for our partners to enable them to show the Nift card customer flow directly in their apps. Our SDKs are meant to be light, secure and easy to use and maintain. Currently, we support Android, iOS, and React Native.
 To view our individual docs, check the links below
 
 ---
