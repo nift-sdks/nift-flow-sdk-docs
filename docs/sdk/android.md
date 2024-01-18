@@ -1,5 +1,7 @@
 # Android SDKs
 
+## Using the SDK
+
 Our Android SDKs gives access to a few classes to support instatiating and using the `NiftCardFlowFragment`.
 ```kotlin
 val fragment = NiftCardFlowFragment(niftCardFlowConfig)
@@ -24,3 +26,16 @@ val fragment =  NiftCardFlowFragment(config)
 ```
 
 Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
+
+## Requirements
+Download the latest version of Xcode. Xcode 11 and above comes with a built-in Swift Package Manager.
+
+For more information on Swift Package Manager, view the [official Swift documentation](https://www.swift.org/package-manager/).
+
+## How to install
+To install for iOS development:
+
+On Xcode:
+1. Go to File > Add Package Dependencies
+2. Enter the package URL
+3. Select your dependency rule (usually Up to Next Major Version)
