@@ -28,14 +28,16 @@ val fragment =  NiftCardFlowFragment(config)
 Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
 
 ## Requirements
-Download the latest version of Xcode. Xcode 11 and above comes with a built-in Swift Package Manager.
-
-For more information on Swift Package Manager, view the [official Swift documentation](https://www.swift.org/package-manager/).
+Download the latest version of Android Studio and gradle. We currently support a minimum SDK of 24
 
 ## How to install
-To install for iOS development:
+To install for Android development:
 
-On Xcode:
-1. Go to File > Add Package Dependencies
-2. Enter the package URL
-3. Select your dependency rule (usually Up to Next Major Version)
+In Android Studio:
+1. Go to vuild.gradle(app)
+2. Enter the package name and version
+   ```
+   dependencies {
+       implementation 'com.nift.{package-name}:X.X.X'
+   }
+   ```
