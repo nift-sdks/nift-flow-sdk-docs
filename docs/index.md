@@ -5,5 +5,7 @@ To view our individual docs, check the links below
 
 ---
 [Android](sdk/android.md)
+
 [iOS](sdk/ios.md)
+
 [React Native](sdk/react-native.md)
