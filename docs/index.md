@@ -9,3 +9,5 @@ To view our individual docs, check the links below
 [iOS](sdk/ios.md)
 
 [React Native](sdk/react-native.md)
+
+[Customer Status Server API](sdk/customer-status-server.md)
