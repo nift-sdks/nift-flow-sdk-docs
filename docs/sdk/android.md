@@ -2,6 +2,7 @@
 
 ## Using the SDK
 
+### Main Use
 Our Android SDKs gives access to a few classes to support instatiating and using the `NiftCardFlowFragment`.
 ```kotlin
 val fragment = NiftCardFlowFragment(niftCardFlowConfig)
@@ -27,6 +28,25 @@ val fragment =  NiftCardFlowFragment(config)
 ```
 
 Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
+
+### Additional Functions
+Two types of preloading functions are provided. One that uses `await()` and must be called from a suspend function, and another that completes asynchronously but doesn't require a suspend function
+
+```kotlin
+suspend fun preloadActivation(context: Context)
+```
+```kotlin
+  fun preloadActivationAsync(context: Context)
+```
+
+There is also an `isLoaded` function
+```kotlin
+  fun isLoaded(): Boolean
+```
+And a function that returns a flow of caught errors. This is to support any custom error handling/visualization.
+```
+  fun getErrorUpdates(): Flow<Throwable>
+```
 
 ## Requirements
 Download the latest version of Android Studio and gradle. We currently support a minimum SDK of 24
