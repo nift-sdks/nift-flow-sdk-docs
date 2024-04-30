@@ -10,7 +10,7 @@ val fragment = NiftCardFlowFragment(niftCardFlowConfig)
 To create the config, please provide a valid customer, Nift referral code, and the client ID (will be given to you along with a client secret).
 There is an optional `passedMLDA` field for verifying the user as above or under the minimum drinking age. If this field is not set, the default Nift behaviour will be used.
 ```kotlin
-CscNiftCardFlowConfig(context: Context, customer: Customer, referralCode: String, cliendId: String, passedMLDA: Boolean? = null)
+NiftCardFlowConfig(context: Context, customer: Customer, referralCode: String, cliendId: String, passedMLDA: Boolean? = null)
 ```
 
 And finally, `Customer` is a simple class that requires first name, last name, and email and has an optional zipcode field (for serving local gifts).
@@ -22,7 +22,7 @@ All together, creating the fragment looks like the following:
 ```kotlin
 val customer = Customer(firstName = "Person", lastName = "Surname", email = "person@email.com")
 val context = requireContext()
-val config = CscNiftCardFlowConfig(context, customer, "referralcode1234", "12345")
+val config = NiftCardFlowConfig(context, customer, "referralcode1234", "12345")
 val fragment =  NiftCardFlowFragment(config)
 ```
 
