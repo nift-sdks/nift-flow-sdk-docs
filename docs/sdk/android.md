@@ -35,10 +35,27 @@ Download the latest version of Android Studio and gradle. We currently support a
 To install for Android development:
 
 In Android Studio:
-1. Go to vuild.gradle(app)
-2. Enter the package name and version
+1. Go to build.gradle(app)
+2. Under repositories, add the repo URl for your package. i.e.
    ```
-   dependencies {
-       implementation 'com.nift.{package-name}:X.X.X'
+   repositories {
+       google()
+       mavenCentral()
+       maven {
+         name = "GitHubPackages"
+         url = uri("https://maven.pkg.github.com/ogwee/[library-name]")
+         credentials {
+           username = System.getenv("NIFT_ANDROID_PACKAGE_USERNAME")
+           password = System.getenv("NIFT_ANDROID_PACKAGE_TOKEN")
+         }
+       }
+     }
    }
    ```
+3. Enter the package name and version
+   ```
+   dependencies {
+       implementation '{package-name}:1.0.1'
+   }
+   ```
+4. Sync
