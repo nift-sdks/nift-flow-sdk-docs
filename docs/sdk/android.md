@@ -21,7 +21,7 @@ Customer(firstName: String, lastName: String, email: String, zipcode: String? = 
 All together, creating the fragment looks like the following:
 ```kotlin
 val customer = Customer(firstName = "Person", lastName = "Surname", email = "person@email.com")
-val config = NiftCardFlowConfig(customer = customer, referralCode = "code", clientId = "xxxxxxxxxx")
+val config = CscNiftCardFlowConfig(context: Context, customer: Customer, referralCode: String, cliendId: String, passedMLDA: Boolean? = null)
 val fragment =  NiftCardFlowFragment(config)
 ```
 
