@@ -49,7 +49,7 @@ And a function that returns a flow of caught errors. This is to support any cust
 ```
 
 ## Requirements
-Download the latest version of Android Studio and gradle. We currently support a minimum SDK of 24
+Download the latest version of Android Studio and gradle. We currently support a minimum SDK of 26
 
 ## How to install
 To install for Android development:
