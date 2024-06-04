@@ -1,8 +1,9 @@
-# iOS SDKs
+Nift's iOS SDK for the Nift Card Flow
+
 ## Using the SDK
 ### Main Use
 
-Our iOS SDKs gives access to a few classes to support instatiating and using `NiftCardFlowView` (Swift UI)
+Our iOS SDKs gives access to a few classes to support instantiating and using `NiftCardFlowView` (Swift UI)
 ```swift
 NiftCardFlowView(config: niftCardFlowConfig)
 ```
@@ -20,11 +21,10 @@ Customer(firstName: String, lastName: String, email: String, zipcode: String? = 
 
 All together, creating the view looks like the following:
 ```swift
-import [LibraryName]IosSdk
-import NiftIosCommonBase # for Customer definition
+import NiftCardFlowSource
 
 struct ContentView: View {
-    var config = CscNiftCardFlowConfig(
+    var config = NiftCardFlowConfig(
         customer: Customer(
             email: "person@email.com",
             firstName: "Person",
@@ -72,3 +72,4 @@ On Xcode:
 1. Go to File > Add Package Dependencies
 2. Enter the package URL (this will be given to you)
 3. Select your dependency rule (usually Up to Next Major Version)
+
