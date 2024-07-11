@@ -13,7 +13,7 @@ Form Data Needed:
 grant_type: client_credentials
 client_id: [given by Nift]
 client_secret: [given by Nift]
-scope: customers:read
+scope: read:customers
 ```
 
 Posting to this endpoint returns json similar the following:
@@ -22,7 +22,7 @@ Posting to this endpoint returns json similar the following:
     "access_token": "12345679hdvjkkg",
     "token_type": "Bearer",
     "expires_in": 31556952,
-    "scope": "customers:read",
+    "scope": "read:customers",
     "created_at": 1679447338
 }
 ```
@@ -37,7 +37,7 @@ code: [referral code]
 ```
 Header Needed:
 ```
-Authentication: Bearer [access token]
+Authorization: Bearer [access token]
 ```
 
 This will give you json similar to the following:
