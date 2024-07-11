@@ -3,13 +3,16 @@
 ## Using the SDK
 
 ### Main Use
-Our Android SDKs gives access to a few classes to support instatiating and using the `NiftCardFlowFragment`.
+Our Android SDKs gives access to a few classes to support instatiating and using the `NiftCardFlowFragment`(Android View) or `NiftCardFlowScreen` (Jetpack Compose).
 ```kotlin
 val fragment = NiftCardFlowFragment(niftCardFlowConfig)
 ```
+```kotlin
+NiftCardFlowScreen(niftCardFlowConfig, modifier = Modifier)
+```
 
-To create the config, please provide a valid customer, Nift referral code, and the client ID (will be given to you along with a client secret).
-There is an optional `passedMLDA` field for verifying the user as above or under the minimum drinking age. If this field is not set, the default Nift behaviour will be used.
+To create the config, please provide context, a valid customer, Nift referral code, and the client ID (will be given to you).
+There is an optional `passedMLDA` field for verifying the user is above or under the minimum drinking age. If this field is not set, the default Nift behaviour will be used.
 ```kotlin
 NiftCardFlowConfig(context: Context, customer: Customer, referralCode: String, cliendId: String, passedMLDA: Boolean? = null)
 ```
@@ -27,10 +30,20 @@ val config = NiftCardFlowConfig(context, customer, "referralcode1234", "12345")
 val fragment =  NiftCardFlowFragment(config)
 ```
 
+And creating the screen looks like the following:
+```kotlin
+@Composable
+fun ComposableView(...) {
+val customer = Customer(firstName = "Person", lastName = "Surname", email = "person@email.com")
+val context = LocalContext.current
+val config = NiftCardFlowConfig(context, customer, "referralcode1234", "12345")
+NiftCardFlowScreen(config)
+```
+
 Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
 
 ### Additional Functions
-Two types of preloading functions are provided. One that uses `await()` and must be called from a suspend function, and another that completes asynchronously but doesn't require a suspend function
+Two types of preloading functions are provided in the config. One that uses `await()` and must be called from a suspend function, and another that completes asynchronously but doesn't require a suspend function
 
 ```kotlin
 suspend fun preloadActivation(context: Context)
