@@ -34,10 +34,11 @@ And creating the screen looks like the following:
 ```kotlin
 @Composable
 fun ComposableView(...) {
-val customer = Customer(firstName = "Person", lastName = "Surname", email = "person@email.com")
-val context = LocalContext.current
-val config = NiftCardFlowConfig(context, customer, "referralcode1234", "12345")
-NiftCardFlowScreen(config)
+  val customer = Customer(firstName = "Person", lastName = "Surname", email = "person@email.com")
+  val context = LocalContext.current
+  val config = NiftCardFlowConfig(context, customer, "referralcode1234", "12345")
+  NiftCardFlowScreen(config)
+}
 ```
 
 Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
@@ -49,16 +50,16 @@ Two types of preloading functions are provided in the config. One that uses `awa
 suspend fun preloadActivation(context: Context)
 ```
 ```kotlin
-  fun preloadActivationAsync(context: Context)
+fun preloadActivationAsync(context: Context)
 ```
 
 There is also an `isLoaded` function
 ```kotlin
-  fun isLoaded(): Boolean
+fun isLoaded(): Boolean
 ```
 And a function that returns a flow of caught errors. This is to support any custom error handling/visualization.
 ```
-  fun getErrorUpdates(): Flow<Throwable>
+fun getErrorUpdates(): Flow<Throwable>
 ```
 
 ## Requirements
@@ -76,7 +77,7 @@ In Android Studio:
        mavenCentral()
        maven {
          name = "GitHubPackages"
-         url = uri("https://maven.pkg.github.com/ogwee/[library-name]")
+         url = uri("https://maven.pkg.github.com/ogwee/nift-card-flow-android-source")
          credentials {
            username = System.getenv("NIFT_ANDROID_PACKAGE_USERNAME")
            password = System.getenv("NIFT_ANDROID_PACKAGE_TOKEN")
@@ -88,7 +89,7 @@ In Android Studio:
 3. Enter the package name and version
    ```
    dependencies {
-       implementation '{package-name}:1.0.1'
+       implementation 'com.nift.nift-card-flow:1.1.1'
    }
    ```
 4. Sync
