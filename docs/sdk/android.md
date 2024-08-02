@@ -89,7 +89,7 @@ In Android Studio:
 3. Enter the package name and version
    ```
    dependencies {
-       implementation 'com.nift.nift-card-flow:1.1.1'
+       implementation 'com.nift:nift-card-flow:1.1.1'
    }
    ```
 4. Sync
