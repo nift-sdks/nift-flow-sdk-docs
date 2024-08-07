@@ -11,3 +11,8 @@ To view our individual docs, check the links below
 [React Native](docs/sdk/react-native.md)
 
 [Customer Status Server API](docs/sdk/customer-status-server.md)
+
+
+
+### Referral Codes Docs
+[Referral Codes](docs/referral_codes.md)
