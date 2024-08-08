@@ -68,8 +68,13 @@ For more information on Swift Package Manager, view the [official Swift document
 ## How to install
 To install for iOS development:
 
-On Xcode:
+via Xcode:
 1. Go to File > Add Package Dependencies
-2. Enter the package URL (this will be given to you)
+2. Enter the package URL (https://github.com/nift-sdks/nift-card-flow-ios)
 3. Select your dependency rule (usually Up to Next Major Version)
+
+or add the following to your Package.swift
+```
+.package(url: "https://github.com/nift-sdks/nift-card-flow-ios", from: "1.1.6")
+```
 
