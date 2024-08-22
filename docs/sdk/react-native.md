@@ -23,6 +23,9 @@ Make sure all peer dependencies are installed.
 npm install @react-native-clipboard/clipboard
 npm install @react-navigation/native
 npm install @react-navigation/native-stack
+npm install react-native-gesture-handler
+npm install react-native-reanimated
+npm install react-native-root-toast
 npm install react-native-safe-area-context
 npm install react-native-screens
 npm install react-native-svg
@@ -34,6 +37,9 @@ or
 yarn add @react-native-clipboard/clipboard
 yarn add @react-navigation/native
 yarn add @react-navigation/native-stack
+yarn add react-native-gesture-handler
+yarn add react-native-reanimated
+yarn add react-native-root-toast
 yarn add react-native-safe-area-context
 yarn add react-native-screens
 yarn add react-native-svg
@@ -64,7 +70,12 @@ yarn react-native-asset
 `cd ios` and `pod install`
 
 ## Usage
-To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. All fields are required, and this can be called multiple times. Please initialize the service before displaying the view. The view takes as a prop an optional errorHandler.
+To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. All fields are required, and this can be called multiple times. Please initialize the service before displaying the view.
+
+The view takes the following functions as optional props:
+- `linkHandler`: used when URLs need to be opened in a special way
+- `errorHandler`: used to know what errors may happen (i.e. network errors) especially so that they can be displayed somehow to the user
+- `selectionHandler`: if set, this function is called when a user successfully selects a gift
 
 ```js
 import { NiftCardFlowView, NiftCardFlow } from 'ogwee/{package-name}';
@@ -76,13 +87,17 @@ NiftCardFlow.initialize(customer: NiftCardCustomer, referralCode: string, client
 const errorhandler: NiftErrorCallback = (_error) => {
   Toast.show('error', { duration: Toast.durations.SHORT });
 };
-const linkHandler: LinkCallback = (link) => {
+const linkHandler: NiftLinkCallback = (link) => {
   Toast.show(link, { duration: Toast.durations.SHORT });
+};
+const selectionHandler: () => {
+  Toast.show('user selected a gift!');
 };
 
 // ...
 
-<NiftCardFlowView errorHandler={errorhandler} linkHandler={linkHandler} />
+<NiftCardFlowView errorHandler={errorhandler} linkHandler={linkHandler}
+                  selectionHandler={selectionHandler} />
 ```
 
 ### NiftCardCustomer
