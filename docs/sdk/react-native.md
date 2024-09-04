@@ -5,16 +5,16 @@
 ### 1. Install package
 Add a `.npmrc` file and include
 ```.sh
-@ogwee:registry=https://npm.pkg.github.com
+@nift-sdks:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken={GITHUB_TOKEN}
 ```
 Then you can install the react native package:
 ```sh
-npm install @ogwee/{package-name}
+npm install @nift-sdks/nift-card-flow-react-native
 ```
 or
 ```sh
-yarn add @ogwee/{package-name}
+yarn add @nift-sdks/nift-card-flow-react-native
 ```
 ### 2. Peer Dependencies
 Make sure all peer dependencies are installed.
@@ -57,7 +57,7 @@ module.exports = {
         ios:{},
         android:{}
     },
-    assets:["node_modules/@ogwee/{package-name}/src/assets/"],
+    assets:["node_modules/@nift-sdks/nift-card-flow-react-native/src/assets/"],
 }
 ```
 
@@ -78,8 +78,8 @@ The view takes the following functions as optional props:
 - `selectionHandler`: if set, this function is called when a user successfully selects a gift
 
 ```js
-import { NiftCardFlowView, NiftCardFlow } from 'ogwee/{package-name}';
-import type { NiftCardCustomer, NiftErrorCallback } from 'ogwee/{package-name}';
+import { NiftCardFlowView, NiftCardFlow } from 'nift-sdks/nift-card-flow-react-native';
+import type { NiftCardCustomer, NiftErrorCallback } from 'nift-sdks/nift-card-flow-react-native';
 
 // ...
 
