@@ -63,8 +63,9 @@ module.exports = {
 
 To sync fonts, call
 ```sh
-yarn react-native-asset
+npx react-native-asset
 ```
+If the `npx` command isn't available, install as a dev dependency instead and call `yarn react-native-asset`
 
 ### 5. Install pods
 `cd ios` and `pod install`
