@@ -8,7 +8,7 @@ Add a `.npmrc` file and include
 @nift-sdks:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken={GITHUB_TOKEN}
 ```
-Then you can install the react native package:
+Then you can then install version 1.4.2:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
