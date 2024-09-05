@@ -75,6 +75,6 @@ via Xcode:
 
 or add the following to your Package.swift
 ```
-.package(url: "https://github.com/nift-sdks/nift-card-flow-ios", from: "1.1.6")
+.package(url: "https://github.com/nift-sdks/nift-card-flow-ios", from: "1.2.5")
 ```
 
