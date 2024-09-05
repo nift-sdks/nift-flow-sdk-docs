@@ -48,3 +48,5 @@ This will give you json similar to the following:
     "last_selected_at": "2022-11-01T12:21:00.000-04:00"
 }
 ```
+
+Possible "status" field values: "available" and "selected"
