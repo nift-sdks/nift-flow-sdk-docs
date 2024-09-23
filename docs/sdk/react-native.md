@@ -8,7 +8,7 @@ Add a `.npmrc` file and include
 @nift-sdks:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken={GITHUB_TOKEN}
 ```
-Then you can then install version 1.4.3:
+Then you can then install version **2.1.12**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
@@ -21,30 +21,26 @@ Make sure all peer dependencies are installed.
 
 ```sh
 npm install @react-native-clipboard/clipboard
-npm install @react-navigation/native
-npm install @react-navigation/native-stack
+npm install lottie-react-native
+npm install react-native-device-info
+npm install react-native-fast-image
 npm install react-native-gesture-handler
 npm install react-native-reanimated
-npm install react-native-root-toast
 npm install react-native-safe-area-context
 npm install react-native-screens
 npm install react-native-svg
-npm install react-native-asset
-npm install react-native-device-info
 ```
 or
 ```sh
 yarn add @react-native-clipboard/clipboard
-yarn add @react-navigation/native
-yarn add @react-navigation/native-stack
+yarn add lottie-react-native
+yarn add react-native-device-info
+yarn add react-native-fast-image
 yarn add react-native-gesture-handler
 yarn add react-native-reanimated
-yarn add react-native-root-toast
 yarn add react-native-safe-area-context
 yarn add react-native-screens
 yarn add react-native-svg
-yarn add react-native-asset
-yarn add react-native-device-info
 ```
 
 ### 4. Font Assets
@@ -57,7 +53,7 @@ module.exports = {
         ios:{},
         android:{}
     },
-    assets:["node_modules/@nift-sdks/nift-card-flow-react-native/src/assets/"],
+    assets:["node_modules/@nift-sdks/nift-card-flow-react-native/src/assets"],
 }
 ```
 
@@ -71,12 +67,13 @@ If the `npx` command isn't available, install as a dev dependency instead and ca
 `cd ios` and `pod install`
 
 ## Usage
-To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. All fields are required, and this can be called multiple times. Please initialize the service before displaying the view.
+To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. Most fields are required, and this can be called multiple times. Please initialize the service before displaying the view.
 
 The view takes the following functions as optional props:
 - `linkHandler`: used when URLs need to be opened in a special way
 - `errorHandler`: used to know what errors may happen (i.e. network errors) especially so that they can be displayed somehow to the user
 - `selectionHandler`: if set, this function is called when a user successfully selects a gift
+- `isDarkTheme`: Whether to show the dark or light theme. Defaults to false for light theme. This only works if a dark theme has been specified.
 
 ```js
 import { NiftCardFlowView, NiftCardFlow } from 'nift-sdks/nift-card-flow-react-native';
@@ -98,7 +95,8 @@ const selectionHandler: () => {
 // ...
 
 <NiftCardFlowView errorHandler={errorhandler} linkHandler={linkHandler}
-                  selectionHandler={selectionHandler} />
+                  selectionHandler={selectionHandler}
+                  isDarkTheme={false} />
 ```
 
 ### NiftCardCustomer
