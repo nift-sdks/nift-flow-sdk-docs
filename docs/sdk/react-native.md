@@ -8,7 +8,7 @@ Add a `.npmrc` file and include
 @nift-sdks:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken={GITHUB_TOKEN}
 ```
-Then you can then install version **2.4.2**:
+Then you can then install version **2.5.3**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
@@ -65,6 +65,14 @@ If the `npx` command isn't available, install as a dev dependency instead and ca
 
 ### 5. Install pods
 `cd ios` and `pod install`
+
+### 6. Add GIF support
+React Native has GIF animations off by default for Android. Because many gift images are actually GIFs, it's important to enable GIF support.
+In the android, look for `build.gradle` file under app. Under dependencies, add the following:
+```kotlin
+implementation("com.facebook.fresco:animated-gif:3.4.0")
+```
+**Note**: This version might not be the latest version of the library. Check [here](https://github.com/facebook/react-native/blob/main/packages/react-native/gradle/libs.versions.toml) to see the latest version of fresco.
 
 ## Usage
 To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. Most fields are required, and this can be called multiple times. Please initialize the service before displaying the view.
