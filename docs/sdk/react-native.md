@@ -8,7 +8,7 @@ Add a `.npmrc` file and include
 @nift-sdks:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken={GITHUB_TOKEN}
 ```
-Then you can then install version **2.5.3**:
+Then you can then install version **2.5.4**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
