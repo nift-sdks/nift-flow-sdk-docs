@@ -23,11 +23,8 @@ Make sure all peer dependencies are installed.
 npm install @react-native-clipboard/clipboard
 npm install lottie-react-native
 npm install react-native-device-info
-npm install react-native-fast-image
 npm install react-native-gesture-handler
 npm install react-native-reanimated
-npm install react-native-safe-area-context
-npm install react-native-screens
 npm install react-native-svg
 ```
 or
@@ -35,11 +32,8 @@ or
 yarn add @react-native-clipboard/clipboard
 yarn add lottie-react-native
 yarn add react-native-device-info
-yarn add react-native-fast-image
 yarn add react-native-gesture-handler
 yarn add react-native-reanimated
-yarn add react-native-safe-area-context
-yarn add react-native-screens
 yarn add react-native-svg
 ```
 
