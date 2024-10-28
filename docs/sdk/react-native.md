@@ -4,10 +4,19 @@
 
 ### 1. Install package
 Add a `.npmrc` file and include
-```.sh
+```sh
 @nift-sdks:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken={GITHUB_TOKEN}
 ```
+and/or a `.yarnrc.yml` file and include
+```sh
+npmScopes:
+  nift-sdks:
+    npmAlwaysAuth: true
+    npmRegistryServer: "https://npm.pkg.github.com/nift-sdks/"
+    npmAuthToken: "{GITHUB_TOKEN}"
+```
+
 Then you can then install version **2.5.5**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
