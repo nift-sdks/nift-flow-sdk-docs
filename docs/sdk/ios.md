@@ -70,11 +70,11 @@ To install for iOS development:
 
 via Xcode:
 1. Go to File > Add Package Dependencies
-2. Enter the package URL (https://github.com/nift-sdks/nift-card-flow-ios)
+2. Enter the package URL with token (https://oauth2:{GITHUB_TOKEN}@github.com/nift-sdks/nift-card-flow-ios.git). This should not require signing in separately with a user.
 3. Select your dependency rule (usually Up to Next Major Version)
 
 or add the following to your Package.swift
 ```
-.package(url: "https://github.com/nift-sdks/nift-card-flow-ios", from: "1.2.5")
+.package(url: "https://oauth2:{GITHUB_TOKEN}@github.com/nift-sdks/nift-card-flow-ios.git", from: "1.2.5")
 ```
 
