@@ -77,7 +77,7 @@ In Android Studio:
        mavenCentral()
        maven {
          name = "GitHubPackages"
-         url = uri("https://maven.pkg.github.com/ogwee/nift-card-flow-android-source")
+         url = uri("https://maven.pkg.github.com/nift-sdks/nift-card-flow-android-source")
          credentials {
            username = System.getenv("NIFT_ANDROID_PACKAGE_USERNAME")
            password = System.getenv("NIFT_ANDROID_PACKAGE_TOKEN")
