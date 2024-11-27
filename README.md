@@ -4,6 +4,7 @@ Nift currently makes a number of SDKs for our partners to enable them to show th
 To view our individual docs, check the links below
 
 ---
+### Nift Card Flow SDK Docs
 [Android](docs/sdk/android.md)
 
 [iOS](docs/sdk/ios.md)
@@ -14,5 +15,5 @@ To view our individual docs, check the links below
 
 
 
-### Referral Codes Docs
+### Other Docs
 [Referral Codes](docs/referral_codes.md)
