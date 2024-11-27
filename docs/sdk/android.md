@@ -79,7 +79,6 @@ In Android Studio:
          name = "GitHubPackages"
          url = uri("https://maven.pkg.github.com/nift-sdks/nift-card-flow-android-source")
          credentials {
-           username = System.getenv("NIFT_ANDROID_PACKAGE_USERNAME")
            password = System.getenv("NIFT_ANDROID_PACKAGE_TOKEN")
          }
        }
