@@ -80,6 +80,7 @@ In Android Studio:
          url = uri("https://maven.pkg.github.com/nift-sdks/nift-card-flow-android-source")
          credentials {
            password = System.getenv("NIFT_ANDROID_PACKAGE_TOKEN")
+           username = "oauth"
          }
        }
      }
