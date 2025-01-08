@@ -4,7 +4,7 @@ Our server-side API gives access to the customer status.
 Using, oauth token authorization, the customer's email, and the referral code, the endpoint returns the customer status (eligibility to receive a Nift gift),
 the last time they activated a nift card, and the last time they selected a gift.
 
-## Token Authorisation
+## Token Authorization
 From a server, the access token must be received using the given cliend ID and secret.
 
 `post` to https://www.gonift.com/oauth/token
