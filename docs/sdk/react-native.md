@@ -17,7 +17,7 @@ npmScopes:
     npmAuthToken: "{GITHUB_TOKEN}"
 ```
 
-Then you can then install version **2.7.10**:
+Then you can then install version **2.8.1**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
@@ -84,6 +84,7 @@ The view takes the following functions as optional props:
 - `linkHandler`: used when URLs need to be opened in a special way
 - `errorHandler`: used to know what errors may happen (i.e. network errors) especially so that they can be displayed somehow to the user
 - `selectionHandler`: if set, this function is called when a user successfully selects a gift
+- `toastHandler`: if set, this function is called with a message that is meant to be shown as a toast message. Allows anyone implementing this to customize how toasts are displayed
 - `isDarkTheme`: Whether to show the dark or light theme. Defaults to false for light theme. This only works if a dark theme has been specified.
 
 ```js
