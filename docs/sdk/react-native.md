@@ -17,7 +17,7 @@ npmScopes:
     npmAuthToken: "{GITHUB_TOKEN}"
 ```
 
-Then you can then install version **2.8.1**:
+Then you can then install version **2.11.8**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
@@ -78,14 +78,10 @@ implementation("com.facebook.fresco:animated-gif:3.4.0")
 **Note**: This version might not be the latest version of the library. Check [here](https://github.com/facebook/react-native/blob/main/packages/react-native/gradle/libs.versions.toml) to see the latest version of fresco.
 
 ## Usage
-To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. Most fields are required, and this can be called multiple times. Please initialize the service before displaying the view.
-
-The view takes the following functions as optional props:
-- `linkHandler`: used when URLs need to be opened in a special way
-- `errorHandler`: used to know what errors may happen (i.e. network errors) especially so that they can be displayed somehow to the user
-- `selectionHandler`: if set, this function is called when a user successfully selects a gift
-- `toastHandler`: if set, this function is called with a message that is meant to be shown as a toast message. Allows anyone implementing this to customize how toasts are displayed
-- `isDarkTheme`: Whether to show the dark or light theme. Defaults to false for light theme. This only works if a dark theme has been specified.
+To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. `initialize` must be called before displaying the view, but can be called multiple times. Most fields are required, but there are 3 optional fields:
+- `passedMLDA`: whether the user is of minimum legal drinking age or not.
+- `countryCode`: ISO 3 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
+- `userProfile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
 
 ```js
 import { NiftCardFlowView, NiftCardFlow } from 'nift-sdks/nift-card-flow-react-native';
@@ -93,7 +89,16 @@ import type { NiftCardCustomer, NiftErrorCallback } from 'nift-sdks/nift-card-fl
 
 // ...
 
-NiftCardFlow.initialize(customer: NiftCardCustomer, referralCode: string, clientId: string, passedMLDA?: boolean)
+NiftCardFlow.initialize(customer: NiftCardCustomer, referralCode: string, clientId: string, passedMLDA?: boolean, countryCode?: string, userProfile?: any)
+```
+
+The view takes the following functions as optional props:
+- `linkHandler`: used when URLs need to be opened in a special way
+- `errorHandler`: used to know what errors may happen (i.e. network errors) especially so that they can be displayed somehow to the user
+- `selectionHandler`: if set, this function is called when a user successfully selects a gift
+- `toastHandler`: if set, this function is called with a message that is meant to be shown as a toast message. Allows anyone implementing this to customize how toasts are displayed
+- `isDarkTheme`: Whether to show the dark or light theme. Defaults to false for light theme. This only works if a dark theme has been specified.
+```
 const errorhandler: NiftErrorCallback = (_error) => {
   Toast.show('error', { duration: Toast.durations.SHORT });
 };
@@ -110,6 +115,12 @@ const selectionHandler: () => {
                   selectionHandler={selectionHandler}
                   isDarkTheme={false} />
 ```
+
+**Error Handling**
+The error handler in the react native SDK has the potential to throw 2 main errors:
+ - ApiResponseError: can happen because of a network related issue.
+ - SecurityError: happens when a user isn't allowed to access our servers. This is usually country related (i.e. trying to access from an unsupported country).
+  
 
 ### NiftCardCustomer
 | name        | type   | default      |
