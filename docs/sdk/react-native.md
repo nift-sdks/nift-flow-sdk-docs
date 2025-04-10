@@ -117,9 +117,10 @@ const selectionHandler: () => {
 ```
 
 **Error Handling**
+
 The error handler in the react native SDK has the potential to throw 2 main errors:
- - ApiResponseError: can happen because of a network related issue.
- - SecurityError: happens when a user isn't allowed to access our servers. This is usually country related (i.e. trying to access from an unsupported country).
+ - `ApiResponseError`: can happen because of a network related issue.
+ - `SecurityError`: happens when a user isn't allowed to access our servers. This is usually country related (i.e. trying to access from an unsupported country).
   
 
 ### NiftCardCustomer
