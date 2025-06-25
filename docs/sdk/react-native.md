@@ -17,7 +17,7 @@ npmScopes:
     npmAuthToken: "{GITHUB_TOKEN}"
 ```
 
-Then you can then install version **3.1.4**:
+Then you can then install version **3.2.1**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
