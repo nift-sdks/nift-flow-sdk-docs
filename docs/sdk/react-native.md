@@ -17,7 +17,7 @@ npmScopes:
     npmAuthToken: "{GITHUB_TOKEN}"
 ```
 
-Then you can then install version **2.11.11**:
+Then you can then install version **3.1.4**:
 ```sh
 npm install @nift-sdks/nift-card-flow-react-native
 ```
@@ -78,10 +78,7 @@ implementation("com.facebook.fresco:animated-gif:3.4.0")
 **Note**: This version might not be the latest version of the library. Check [here](https://github.com/facebook/react-native/blob/main/packages/react-native/gradle/libs.versions.toml) to see the latest version of fresco.
 
 ## Usage
-To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info. `initialize` must be called before displaying the view, but can be called multiple times. Most fields are required, but there are 3 optional fields:
-- `passedMLDA`: whether the user is of minimum legal drinking age or not.
-- `countryCode`: ISO 3 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
-- `userProfile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
+To initialize the service, call `NiftCardFlow.initialize` with your clientID (will be given to you), referral code, and customer info (type shown below). `initialize` must be called before displaying the view, but can be called multiple times.
 
 ```js
 import { NiftCardFlowView, NiftCardFlow } from 'nift-sdks/nift-card-flow-react-native';
@@ -89,7 +86,7 @@ import type { NiftCardCustomer, NiftErrorCallback } from 'nift-sdks/nift-card-fl
 
 // ...
 
-NiftCardFlow.initialize(customer: NiftCardCustomer, referralCode: string, clientId: string, passedMLDA?: boolean, countryCode?: string, userProfile?: any)
+NiftCardFlow.initialize(customerInfo: NiftCardCustomer, referralCode: string, clientId: string)
 ```
 
 The view takes the following functions as optional props:
@@ -123,10 +120,33 @@ The error handler in the react native SDK has the potential to throw 2 main erro
  - `SecurityError`: happens when a user isn't allowed to access our servers. This is usually country related (i.e. trying to access from an unsupported country).
   
 
+## Types
 ### NiftCardCustomer
+| name            | type         | default           |
+|:----------------|:-------------|:------------------|
+| `customer`      | Customer     | - (required)      |
+| `countryCode`   | NiftCountry  | `'US'`            |
+| `language`      | NiftLanguage | `'en'` (required) |
+| `userProfile`   | object       | - (optional)      |
+| `passedMLDA`    | boolean      | - (optional)      |
+
+- `passedMLDA`: whether the user is of minimum legal drinking age or not.
+- `countryCode`: ISO 3 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
+- `language`: language code. Right now only english and french are supported. Defaults to english.**\***
+- `userProfile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
+
+**Note:** Even if a language is selected, if the gift or your location (based on client ID/referral code) doesn't support the lanugage, a language that is supported will be shown instead (most likely english). i.e. only Canadian locations support french.
+
+### Customer
 | name        | type   | default      |
 |:------------|:-------|:-------------|
 | `firstName` | string | - (required) |
 | `lastName`  | string | - (required) |
 | `email`     | string | - (required) |
 | `zipcode`   | string | - (optional) |
+
+### NiftCountry
+`'US' | 'CA' | 'GB'` 
+
+### NiftLanguage
+`'en' | 'fr'`
