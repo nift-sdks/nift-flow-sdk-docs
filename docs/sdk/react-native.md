@@ -131,7 +131,7 @@ The error handler in the react native SDK has the potential to throw 2 main erro
 | `passedMLDA`    | boolean      | - (optional)      |
 
 - `passedMLDA`: whether the user is of minimum legal drinking age or not.
-- `countryCode`: ISO 3 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
+- `countryCode`: ISO 2 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
 - `language`: language code. Right now only english and french are supported. Defaults to english.**\***
 - `userProfile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
 
