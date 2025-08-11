@@ -1,17 +1,19 @@
 # Nift Flow SDK Docs
 
-Nift currently makes a number of SDKs for our partners to enable them to show the Nift card customer flow directly in their apps. Our SDKs are meant to be light, secure and easy to use and maintain. Currently, we support Android, iOS, and React Native.
-To view our individual docs, check the links below
+Nift provides SDKs for partners to integrate the Nift gift redemption flow directly into their applications. Our SDKs are lightweight, secure, and easy to implement across web and mobile platforms.
 
 ---
-### Nift Card Flow SDK Docs
-[Android](docs/sdk/android.md)
+### Nift SDK Documentation
 
-[iOS](docs/sdk/ios.md)
+[Web SDK](docs/sdk/web.md) - JavaScript SDK for web applications
 
-[React Native](docs/sdk/react-native.md)
+[Android](docs/sdk/android.md) - Native Android SDK
 
-[Customer Status Server API](docs/sdk/customer-status-server.md)
+[iOS](docs/sdk/ios.md) - Native iOS SDK  
+
+[React Native](docs/sdk/react-native.md) - Cross-platform mobile SDK
+
+[Customer Status Server API](docs/sdk/customer-status-server.md) - Backend API integration
 
 
 
