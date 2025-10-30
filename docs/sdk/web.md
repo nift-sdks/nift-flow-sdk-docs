@@ -26,21 +26,9 @@ await NiftWebSDK.init({
 });
 ```
 
-### 2. Show Gift Modal
-Once the SDK is initialized, you can show the gift activation modal when appropriate in your user flow:
-
-```javascript
-NiftWebSDK.showModal({
-  onClaim: () => {}, // when the customer clicks the claim button
-  onClose: () => {}, // when the customer closes the modal
-  onShow: () => {}, // when the modal is shown
-  onIneligible: () => {}, // when the customer is ineligible for the gift
-});
-```
-
 The SDK will automatically construct the activation URL using the referral code pattern, including customer information as query parameters.
 
-### 3. Show Embedded Experience
+### 2. Show Embedded Experience
 For a seamless in-page experience, you can show the embedded modal which keeps users on your site:
 
 ```javascript
@@ -72,15 +60,6 @@ This approach keeps customers engaged within your application while still provid
 
 ### Modal Options
 
-#### showModal() Options
-
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `onClaim` | function | No | Called when the customer clicks the claim button |
-| `onClose` | function | No | Called when the customer closes the modal |
-| `onShow` | function | No | Called when the modal is shown |
-| `onIneligible` | function | No | Called when the customer is ineligible for the gift |
-
 #### showEmbeddedModal() Options
 
 | Option | Type | Required | Description |
@@ -94,12 +73,6 @@ This approach keeps customers engaged within your application while still provid
 ## Integration Approaches
 
 ### Choosing Between Modal Types
-
-**Gift Modal (`showModal()`)**
-- Opens redemption in a new window/tab
-- Best for: Simple integrations where redirecting users is acceptable
-- User flow: Click claim → New tab opens with Nift experience
-- Use case: Basic gift offer presentations
 
 **Embedded Modal (`showEmbeddedModal()`)**
 - Keeps users on your site with an in-page iframe
@@ -115,52 +88,8 @@ This approach keeps customers engaged within your application while still provid
 
 ## Complete Examples
 
-### Example 1: Gift Modal (Redirect Flow)
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://cdn.gonift.com/sdk/latest/nift-web-sdk.umd.min.js"></script>
-</head>
-<body>
-  <button id="claimGift">Claim Your Gift</button>
-
-  <script>
-    // Initialize SDK
-    await NiftWebSDK.init({
-      clientId: 'YOUR_CLIENT_ID',
-      customer: {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@example.com'
-      },
-      code: 'REFERRAL_CODE_123', // Your partner referral code (same for all customers)
-    });
-
-    // Show modal on button click
-    document.getElementById('claimGift').addEventListener('click', () => {
-      NiftWebSDK.showModal({
-        onClaim: () => {
-          console.log('User clicked claim button');
-        },
-        onClose: () => {
-          console.log('Modal closed');
-        },
-        onShow: () => {
-          console.log('Modal shown');
-        },
-        onIneligible: () => {
-          console.log('User is ineligible');
-        }
-      });
-    });
-  </script>
-</body>
-</html>
-```
-
-### Example 2: Embedded Modal (In-Page Flow)
+### Example: Embedded Modal (In-Page Flow)
 
 ```html
 <!DOCTYPE html>
@@ -204,12 +133,6 @@ This approach keeps customers engaged within your application while still provid
 
 ## Modal Behavior
 
-### Gift Modal
-- Displays offer information with customizable theme
-- "Claim your gift" button opens redemption in a new tab
-- Modal closes automatically after clicking claim
-- Uses `window.open()` for redemption flow
-
 ### Embedded Modal
 - **Offer Screen**: Shows gift offer with "Claim your gift" button
   - Responsive design adapts to screen size
@@ -223,7 +146,7 @@ This approach keeps customers engaged within your application while still provid
   - Maintains same footer and close button
 
 ### Theme Customization
-Both modal types support theme customization:
+The modal supports theme customization:
 - Primary colors
 - Button styles and text
 - Font family
