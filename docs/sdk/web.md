@@ -6,7 +6,7 @@
 Include the SDK directly in your HTML:
 
 ```html
-<script src="https://cdn.gonift.com/sdk/latest/nift-web-sdk.umd.min.js"></script>
+<script src="https://cdn.nift.me/sdk/webembed/latest/nift-web-sdk.umd.min.js"></script>
 ```
 
 ## Quick Start
@@ -95,7 +95,7 @@ This approach keeps customers engaged within your application while still provid
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.gonift.com/sdk/latest/nift-web-sdk.umd.min.js"></script>
+  <script src="https://cdn.nift.me/sdk/webembed/latest/nift-web-sdk.umd.min.js"></script>
 </head>
 <body>
   <button id="claimGift">Claim Your Gift</button>
