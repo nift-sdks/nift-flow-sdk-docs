@@ -20,6 +20,7 @@ await NiftWebSDK.init({
   customer: {
     firstName: 'John', // optional
     lastName: 'Doe', // optional
+    phoneNumber: '+16179876543', // optional
     email: 'john.doe@example.com' // required
   },
   code: 'REFERRAL_CODE', // required: Your partner referral code (same for all customers)
