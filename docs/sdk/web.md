@@ -58,6 +58,7 @@ This approach keeps customers engaged within your application while still provid
 | `customer.lastName` | string | No | Customer's last name |
 | `customer.email` | string | Yes | Customer's email address |
 | `code` | string | Yes | Your partner referral code (same for all customers) |
+| `skipOffer` | boolean | No | Skip the offer screen and go directly to the Nift gift flow (default: `false`) |
 
 ### Modal Options
 
@@ -132,6 +133,56 @@ This approach keeps customers engaged within your application while still provid
 </html>
 ```
 
+### Example 3: Skip Offer Screen (Direct to Gift Flow)
+
+Use `skipOffer: true` when you want to bypass the offer screen and take users directly to the Nift gift selection flow. This is useful when you've already presented the offer in your own UI.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.gonift.com/sdk/latest/nift-web-sdk.umd.min.js"></script>
+</head>
+<body>
+  <!-- Your own custom offer presentation -->
+  <div class="my-offer-card">
+    <h2>You've earned a $30 gift!</h2>
+    <p>Choose from restaurants, entertainment, and more.</p>
+    <button id="claimGift">Select Your Gift</button>
+  </div>
+
+  <script>
+    // Initialize SDK with skipOffer enabled
+    await NiftWebSDK.init({
+      clientId: 'YOUR_CLIENT_ID',
+      customer: {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@example.com'
+      },
+      code: 'REFERRAL_CODE_123',
+      skipOffer: true, // Skip the offer screen, go directly to gift selection
+    });
+
+    // Show embedded modal - will open directly to the gift flow
+    document.getElementById('claimGift').addEventListener('click', () => {
+      NiftWebSDK.showEmbeddedModal({
+        onShow: () => {
+          console.log('Gift flow shown');
+        },
+        onClose: () => {
+          console.log('Gift flow closed');
+        },
+        onIneligible: () => {
+          console.log('User is ineligible');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
 ## Modal Behavior
 
 ### Embedded Modal
@@ -145,6 +196,14 @@ This approach keeps customers engaged within your application while still provid
   - Mobile: Nearly full-screen with responsive padding
   - Complete Nift redemption experience embedded
   - Maintains same footer and close button
+
+### Skip Offer Mode
+When `skipOffer: true` is set during initialization:
+- The offer screen is bypassed entirely
+- A brief loading spinner is shown while transitioning
+- Users go directly to the gift selection flow (iframe)
+- Useful when you want to present the offer in your own custom UI
+- All other modal behaviors remain the same (close button, callbacks, etc.)
 
 ### Theme Customization
 The modal supports theme customization:
