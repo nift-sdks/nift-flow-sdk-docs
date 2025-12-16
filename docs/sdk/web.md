@@ -59,6 +59,7 @@ This approach keeps customers engaged within your application while still provid
 | `customer.email` | string | Yes | Customer's email address |
 | `code` | string | Yes | Your partner referral code (same for all customers) |
 | `skipOffer` | boolean | No | Skip the offer screen and go directly to the Nift gift flow (default: `false`) |
+| `showClose` | boolean | No | Show a close button (X) at the top right of the modal (default: `false`) |
 
 ### Modal Options
 
@@ -183,6 +184,51 @@ Use `skipOffer: true` when you want to bypass the offer screen and take users di
 </html>
 ```
 
+### Example 4: Show Close Button
+
+Use `showClose: true` to display a close button (X) at the top right corner of the modal. This allows users to dismiss the modal at any point during the flow.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.nift.me/sdk/webembed/latest/nift-web-sdk.umd.min.js"></script>
+</head>
+<body>
+  <button id="claimGift">Claim Your Gift</button>
+
+  <script>
+    // Initialize SDK with showClose enabled
+    await NiftWebSDK.init({
+      clientId: 'YOUR_CLIENT_ID',
+      customer: {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@example.com'
+      },
+      code: 'REFERRAL_CODE_123',
+      showClose: true, // Show close button at top right
+    });
+
+    // Show embedded modal with close button visible
+    document.getElementById('claimGift').addEventListener('click', () => {
+      NiftWebSDK.showEmbeddedModal({
+        onShow: () => {
+          console.log('Modal shown');
+        },
+        onClose: () => {
+          console.log('Modal closed by user');
+        },
+        onIneligible: () => {
+          console.log('User is ineligible');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
 ## Modal Behavior
 
 ### Embedded Modal
@@ -204,6 +250,15 @@ When `skipOffer: true` is set during initialization:
 - Users go directly to the gift selection flow (iframe)
 - Useful when you want to present the offer in your own custom UI
 - All other modal behaviors remain the same (close button, callbacks, etc.)
+
+### Show Close Button
+When `showClose: true` is set during initialization:
+- A close button (X) appears at the top right corner of the modal
+- The button is positioned outside the modal content area
+- Clicking the close button triggers the `onClose` callback
+- Works on both the offer screen and the SDK flow screen
+- Visible throughout the entire user flow
+- Useful when you want to give users an explicit way to dismiss the modal
 
 ### Theme Customization
 The modal supports theme customization:
