@@ -14,6 +14,8 @@ first_name={first_name}&last_name={last_name}&email={email}
 
 You can include all or some of the fields.
 
+You can also append customer id or other id by adding it as a parameter to the URL request. We support any parameter name you prefer to use. Just let us know in advance the parameter name. For example: client_id={client_id} 
+
 ## Braze Integration to Track Conversion
 
 Partners can integrate their Braze account and Nift will push daily events to customers that selected. The partner will need to include in the referral URL the customer external ID or any other unique identifier in Braze that will let Nift be able to find the customer record and create the event.
