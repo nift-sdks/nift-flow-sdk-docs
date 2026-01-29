@@ -3,21 +3,28 @@ Nift's iOS SDK for the Nift Card Flow
 ## Using the SDK
 ### Main Use
 
-Our iOS SDKs gives access to a few classes to support instantiating and using `NiftCardFlowView` (Swift UI)
+Our iOS SDKs gives access to a few classes and structs to support instantiating and using the nift card flow (Swift UI).
+
+To show the view, call `NiftCardFlowView`. 
 ```swift
 NiftCardFlowView(config: niftCardFlowConfig)
 ```
 
-To create the config, please provide a valid customer, Nift referral code, and the client ID (will be given to you along with a client secret).
-There is an optional `passedMLDA` field for verifying the user as above or under the minimum drinking age. If this field is not set, the default Nift behaviour will be used.
+To use with UIKit, pass the SwiftUI view to a `UIHostingController`.
 ```swift
-NiftCardFlowConfig(customer: Customer, referralCode: String, clientId: String, passedMLDA: Bool? = nil)
+let view = NiftCardFlowView(config: niftCardFlowConfig)
+UIHostingController(rootView: view)
 ```
 
-And finally, `Customer` is a simple class that requires first name, last name, and email and has an optional zipcode field (for serving local gifts).
+The `NiftCardFlowConfig` uses a few things for initialization: a `CustomerInfo` instance, `referralCode` (String), `clientID` (String),  and `isDarkTheme` (optional Bool).
+
+The `CustomerInfo` type contains the customer (first name, last name, email, and an optional zipcode) and optional fields country code, preferred language, whether the user has passed minimum drinking age or not, and a profile has for any extra info that will help select better gifts for the customer.
+
 ```swift
-Customer(firstName: String, lastName: String, email: String, zipcode: String? = nil)
+NiftCardFlowConfig(customerInfo: CustomerInfo, referralCode: String, clientId: String, isDarkTheme: Bool = false)
 ```
+
+* Detailed type info is listed below.
 
 All together, creating the view looks like the following:
 ```swift
@@ -25,10 +32,12 @@ import NiftCardFlowSource
 
 struct ContentView: View {
     var config = NiftCardFlowConfig(
-        customer: Customer(
-            email: "person@email.com",
-            firstName: "Person",
-            lastName: "Surname"
+        customerInfo: CustomerInfo(
+            customer: Customer(
+                email: "person@email.com",
+                firstName: "Person",
+                lastName: "Surname"
+            )
         ),
         referralCode: "code",
         clientId: "xxxxxxxxxx")
@@ -45,19 +54,34 @@ struct ContentView: View {
 Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
 
 ### Additional Functions
-In `NiftCardFlowConfig`, there is a preload function that uses async/await
-```swift
-public func preloadActivation() async -> Bool
-```
+In the `NiftCardFlowConfig`, there are optional functions that can be called, many of which can be used for callbacks (with Combine).
 
-There is also and `isLoaded` function
-```swift
-public func isLoaded() -> Bool
-```
-
-And a function that returns a publisher (for use with Combine) of errors. This is to support any custom error handling/visualization.
+To receive errors (such as network errors), `getErrorUpdates` can be called.
 ```swift
 public func getErrorUpdates() -> AnyPublisher<Error, Never>
+```
+
+To handle the look and feel of toast messages, call `connectToastHandler()`.
+```swift
+public func connectToastHandler() -> AnyPublisher<String, Never>
+```
+**Note**: Calling this will disable default toast message handling. To enable the default toast message handling again, please call `disconnectToastHandler`.
+
+To control how URLs are opened/displayed, please call `connectLinkHandler`.
+```swift
+public func connectLinkHandler() -> AnyPublisher<String, Never>
+```
+
+**Note**: Similar to `connectToastHandler`, `connectLinkHandler` will stop the SDK from opening any URLs. Call `disconnectLinkHandler` to enabled the default behaviour again.
+
+To receive a callback when the user selects a gift, call `getSelectionUpdates`
+```swift
+public func getSelectionUpdates() -> AnyPublisher<Void, Never>
+```
+
+And finally, while we do not at the moment have a default dark theme, the SDK does support having custom light and dark themes. To switch for a view that's already shown, feel free to call `setIsDarkTheme`.
+```swift
+public func setIsDarkTheme(darkTheme: Bool) 
 ```
 
 ## Requirements
@@ -78,3 +102,33 @@ or add the following to your Package.swift
 .package(url: "https://oauth2:{GITHUB_TOKEN}@github.com/nift-sdks/nift-card-flow-ios.git", from: "1.2.5")
 ```
 
+## Types
+### CustomerInfo
+| name            | type         | default           |
+|:----------------|:-------------|:------------------|
+| `customer`      | Customer     | - (required)      |
+| `countryCode`   | SupportedCountry  | `.US`             |
+| `language`      | SupportedLanguage | `.en`             |
+| `profile`       | `[String: Any]`       | - (optional)      |
+| `passedMLDA`    | Bool      | - (optional)      |
+
+- `passedMLDA`: whether the user is of minimum legal drinking age or not.
+- `countryCode`: ISO 2 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
+- `language`: language code. Right now only english and french are supported. Defaults to english.**\***
+- `profile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
+
+**Note:** Even if a language is selected, if the gift or your location (based on client ID/referral code) doesn't support the lanugage, a language that is supported will be shown instead (most likely english). i.e. only Canadian locations support french at the moment.
+
+### Customer
+| name        | type   | default      |
+|:------------|:-------|:-------------|
+| `firstName` | string | - (required) |
+| `lastName`  | string | - (required) |
+| `email`     | string | - (required) |
+| `zipcode`   | string | - (optional) |
+
+### NiftCountry
+`.US | .CA | .GB` 
+
+### NiftLanguage
+`.en | .fr`
