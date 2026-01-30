@@ -36,6 +36,7 @@ For a seamless in-page experience, you can show the embedded modal which keeps u
 NiftWebSDK.showEmbeddedModal({
   onClose: () => {}, // when the customer closes the modal
   onShow: () => {}, // when the modal is shown
+  onSelection: () => {}, // when the customer selects a gift
   onIneligible: () => {}, // when the customer is ineligible for the gift
 });
 ```
@@ -69,9 +70,8 @@ This approach keeps customers engaged within your application while still provid
 |--------|------|----------|-------------|
 | `onClose` | function | No | Called when the customer closes the modal |
 | `onShow` | function | No | Called when the modal is shown |
+| `onSelection` | function | No | Called when the customer selects a gift |
 | `onIneligible` | function | No | Called when the customer is ineligible for the gift |
-
-**Note:** The embedded modal does not have an `onClaim` callback since the claim action transitions to the SDK flow within the same modal.
 
 ## Integration Approaches
 
@@ -120,6 +120,9 @@ This approach keeps customers engaged within your application while still provid
       NiftWebSDK.showEmbeddedModal({
         onShow: () => {
           console.log('Embedded modal shown');
+        },
+        onSelection: () => {
+          console.log('Gift selected');
         },
         onClose: () => {
           console.log('Embedded modal closed');
@@ -171,6 +174,9 @@ Use `skipOffer: true` when you want to bypass the offer screen and take users di
         onShow: () => {
           console.log('Gift flow shown');
         },
+        onSelection: () => {
+          console.log('Gift selected');
+        },
         onClose: () => {
           console.log('Gift flow closed');
         },
@@ -215,6 +221,9 @@ Use `showClose: true` to display a close button (X) at the top right corner of t
       NiftWebSDK.showEmbeddedModal({
         onShow: () => {
           console.log('Modal shown');
+        },
+        onSelection: () => {
+          console.log('Gift selected');
         },
         onClose: () => {
           console.log('Modal closed by user');
