@@ -99,7 +99,7 @@ via Xcode:
 
 or add the following to your Package.swift
 ```
-.package(url: "https://oauth2:{GITHUB_TOKEN}@github.com/nift-sdks/nift-card-flow-ios.git", from: "1.2.5")
+.package(url: "https://oauth2:{GITHUB_TOKEN}@github.com/nift-sdks/nift-card-flow-ios.git", from: "2.9.1")
 ```
 
 ## Types
