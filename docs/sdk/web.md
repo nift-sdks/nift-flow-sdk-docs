@@ -24,6 +24,7 @@ await NiftWebSDK.init({
     email: 'john.doe@example.com' // required
   },
   code: 'REFERRAL_CODE', // required: Your partner referral code (same for all customers)
+  region: 'us', // optional: 'us' (default) or 'uk'
 });
 ```
 
@@ -59,6 +60,7 @@ This approach keeps customers engaged within your application while still provid
 | `customer.lastName` | string | No | Customer's last name |
 | `customer.email` | string | Yes | Customer's email address |
 | `code` | string | Yes | Your partner referral code (same for all customers) |
+| `region` | string | No | Regional endpoint: `'us'` (default) or `'uk'`. Routes API calls to the correct regional system. |
 | `skipOffer` | boolean | No | Skip the offer screen and go directly to the Nift gift flow (default: `false`) |
 | `showClose` | boolean | No | Show a close button (X) at the top right of the modal (default: `false`) |
 
@@ -88,6 +90,34 @@ This approach keeps customers engaged within your application while still provid
 2. Use the same referral code for all customers
 3. Pass the referral code to SDK when showing modal
 4. Customer data is automatically included in the activation URL as query parameters
+
+### Multi-Region Support
+
+If your integration spans multiple regions, use the `region` parameter to route API calls to the correct Nift system. Each region has its own Client ID and referral code.
+
+| Region | Value | Endpoint |
+|--------|-------|----------|
+| United States / Canada | `'us'` (default) | gonift.com |
+| United Kingdom | `'uk'` | gonift.co.uk |
+
+```javascript
+// US integration (default — region can be omitted)
+await NiftWebSDK.init({
+  clientId: 'YOUR_US_CLIENT_ID',
+  code: 'US_REFERRAL_CODE',
+  customer: { email: 'john@example.com' },
+});
+
+// UK integration
+await NiftWebSDK.init({
+  clientId: 'YOUR_UK_CLIENT_ID',
+  code: 'UK_REFERRAL_CODE',
+  region: 'uk',
+  customer: { email: 'john@example.com' },
+});
+```
+
+> **Note:** US is the default region. If you only operate in the US or Canada, you do not need to specify `region`.
 
 ## Complete Examples
 
