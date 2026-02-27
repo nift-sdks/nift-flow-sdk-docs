@@ -127,13 +127,13 @@ The error handler in the react native SDK has the potential to throw 2 main erro
 | `customer`      | Customer     | - (required)      |
 | `countryCode`   | NiftCountry  | `'US'`            |
 | `language`      | NiftLanguage | `'en'` (required) |
-| `userProfile`   | object       | - (optional)      |
+| `profile`   | object       | - (optional)      |
 | `passedMLDA`    | boolean      | - (optional)      |
 
 - `passedMLDA`: whether the user is of minimum legal drinking age or not.
 - `countryCode`: ISO 2 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
 - `language`: language code. Right now only english and french are supported. Defaults to english.**\***
-- `userProfile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
+- `profile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
 
 **Note:** Even if a language is selected, if the gift or your location (based on client ID/referral code) doesn't support the lanugage, a language that is supported will be shown instead (most likely english). i.e. only Canadian locations support french.
 
