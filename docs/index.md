@@ -14,3 +14,12 @@ Nift provides SDKs for partners to integrate the Nift gift redemption flow direc
 [React Native](sdk/react-native.md) - Cross-platform mobile SDK
 
 [Customer Status Server API](sdk/customer-status-server.md) - Backend API integration
+
+## Encrypted Email
+
+---
+[Encrypting Values](encrypting_values.md) - How to encrypt sensitive fields with AES-256-GCM
+
+[Nift Web Flow](encrypted_email_web_flow.md) - Passing encrypted email via referral links
+
+[Nift SDK](encrypted_email_sdk.md) - Passing encrypted email via SDKs

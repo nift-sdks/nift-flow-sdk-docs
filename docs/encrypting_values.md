@@ -1,13 +1,11 @@
-# Partner Integration Guide: AES-256-GCM Email Encryption
+# Encrypting Values with AES-256-GCM
 
 ## Overview
 
-To protect customer email addresses in transit, we support encrypting the `email` field using **AES-256-GCM** symmetric encryption. Encrypted email can be passed through two integration paths:
+To protect sensitive customer data in transit, we support encrypting fields (such as `email`) using **AES-256-GCM** symmetric encryption. This encryption format is used across all Nift integration paths:
 
-- **Gift Card Web Flow** — the `GET /nift_cards/<referral_code>/start` URL with query parameters
-- **Partner API** — the `POST /api/v{version}/partners/nift_cards/:code/activations` endpoint
-
-Both paths use the same encryption format and shared key.
+- [Nift Web Flow](encrypted_email_web_flow.md) — referral links with query parameters
+- [Nift SDK](encrypted_email_sdk.md) — SDK initialization
 
 ## What We Provide
 
@@ -22,16 +20,16 @@ Example key (for illustration only — your actual key will be different):
 
 **Important**: Store this key securely. It must never be exposed in client-side code, logs, or version control. Treat it with the same care as a private key or API secret.
 
-## How to Encrypt the Email
+## How to Encrypt
 
 ### Step-by-step process:
 
 1.  **Generate a random 12-byte IV (nonce)** — this MUST be unique for every encryption. Never reuse an IV with the same key.
 
-2.  **Encrypt the email** using AES-256-GCM with:
+2.  **Encrypt the value** using AES-256-GCM with:
     *   Key: the shared secret (Base64-decode it first to get the raw 32 bytes)
     *   IV: the random 12 bytes from step 1
-    *   Plaintext: the email address (e.g., `user@example.com`)
+    *   Plaintext: the value to encrypt (e.g., `user@example.com`)
     *   No additional authenticated data (AAD)
 
 3.  **Collect the outputs**:
@@ -48,9 +46,21 @@ Example key (for illustration only — your actual key will be different):
     }
     ```
 
+    The key for the encrypted data can be `"ciphertext"` **or** the name of the URL parameter carrying the value. For example, if the encrypted payload is sent via an `email` parameter, the following is also accepted:
+
+    ```json
+    {
+      "iv": "<base64url-encoded 12-byte IV>",
+      "email": "<base64url-encoded ciphertext>",
+      "tag": "<base64url-encoded 16-byte tag>"
+    }
+    ```
+
+    When both keys are present, `"ciphertext"` takes precedence.
+
 5.  **Base64url-encode the entire JSON string** to produce the final payload.
 
-6.  **Send this payload** as the `email` parameter value in either integration path.
+6.  **Send this payload** as the parameter value in your chosen integration path.
 
 ### Example
 
@@ -81,7 +91,7 @@ _(These are illustrative values — actual encrypted output will differ every ti
 <summary>JavaScript (Web Crypto API)</summary>
 
 ```javascript
-async function encryptEmail(email, base64Key) {
+async function encryptValue(value, base64Key) {
   const key = await crypto.subtle.importKey(
     'raw',
     Uint8Array.from(atob(base64Key), c => c.charCodeAt(0)),
@@ -91,7 +101,7 @@ async function encryptEmail(email, base64Key) {
   );
 
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  const encoded = new TextEncoder().encode(email);
+  const encoded = new TextEncoder().encode(value);
   const encrypted = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv, tagLength: 128 },
     key,
@@ -127,13 +137,13 @@ function base64urlEncode(bytes) {
 import json, base64, os
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
-def encrypt_email(email: str, base64_key: str) -> str:
+def encrypt_value(value: str, base64_key: str) -> str:
     key = base64.b64decode(base64_key)
     iv = os.urandom(12)
 
     aesgcm = AESGCM(key)
     # encrypt returns ciphertext + tag concatenated
-    ct_and_tag = aesgcm.encrypt(iv, email.encode(), None)
+    ct_and_tag = aesgcm.encrypt(iv, value.encode(), None)
     ciphertext = ct_and_tag[:-16]
     tag = ct_and_tag[-16:]
 
@@ -159,7 +169,7 @@ require 'openssl'
 require 'json'
 require 'base64'
 
-def encrypt_email(email, base64_key)
+def encrypt_value(value, base64_key)
   key = Base64.decode64(base64_key)
   cipher = OpenSSL::Cipher.new('aes-256-gcm')
   cipher.encrypt
@@ -167,7 +177,7 @@ def encrypt_email(email, base64_key)
   iv = cipher.random_iv
   cipher.auth_data = ""
 
-  ciphertext = cipher.update(email) + cipher.final
+  ciphertext = cipher.update(value) + cipher.final
   tag = cipher.auth_tag
 
   payload = {
@@ -192,7 +202,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-public String encryptEmail(String email, String base64Key) throws Exception {
+public String encryptValue(String value, String base64Key) throws Exception {
     byte[] key = Base64.getDecoder().decode(base64Key);
     byte[] iv = new byte[12];
     new SecureRandom().nextBytes(iv);
@@ -202,7 +212,7 @@ public String encryptEmail(String email, String base64Key) throws Exception {
         new SecretKeySpec(key, "AES"),
         new GCMParameterSpec(128, iv));
 
-    byte[] encrypted = cipher.doFinal(email.getBytes("UTF-8"));
+    byte[] encrypted = cipher.doFinal(value.getBytes("UTF-8"));
     // Java appends tag to ciphertext
     byte[] ciphertext = Arrays.copyOfRange(encrypted, 0, encrypted.length - 16);
     byte[] tag = Arrays.copyOfRange(encrypted, encrypted.length - 16, encrypted.length);
@@ -217,120 +227,6 @@ public String encryptEmail(String email, String base64Key) throws Exception {
     return encoder.encodeToString(payload.getBytes("UTF-8"));
 }
 ```
-
-</details>
-
-## Integration Paths
-
-Nift supports two ways to pass an encrypted email address. Both use the same encryption format described above.
-
-### Gift Card Web Flow
-
-Use this path when you want to link customers directly to the gift card experience in a browser. This is commonly used with **skip-details referral codes** that auto-activate the nift card without requiring the customer to fill out a form.
-
-<details>
-<summary>more information</summary>
-
-#### URL Format
-
-```
-GET /nift_cards/{referral_code}/start?email={encrypted_email}&first_name={name}&last_name={name}&zipcode={zip}
-```
-
-All customer fields are **top-level query parameters** (not nested under `loyal_customer` like the API path).
-
-#### Parameters
-
-| Parameter | Location | Required | Description |
-|-----------|----------|----------|-------------|
-| `referral_code` | URL path | Yes | The referral code |
-| `email` | Query string | Yes | Encrypted email (same format as API) or plaintext |
-| `first_name` | Query string | No | Customer's first name |
-| `last_name` | Query string | No | Customer's last name |
-| `zipcode` | Query string | No | Customer's zip code |
-
-#### Example with plaintext email
-
-```
-/nift_cards/MYCODE123/start?first_name=Jane&last_name=Doe&email=jane@example.com&zipcode=02116
-```
-
-#### Example with encrypted email
-
-```
-/nift_cards/MYCODE123/start?first_name=Jane&last_name=Doe&email=eyJpdiI6Ii4uLiIsImNpcGhlcnRleHQiOiIuLi4iLCJ0YWciOiIuLi4ifQ&zipcode=02116
-```
-
-The encrypted `email` value is produced using the exact same encryption process described above. Since the output is Base64url-encoded (using only `A-Z`, `a-z`, `0-9`, `-`, `_`), it is safe to include directly in a URL query string without additional percent-encoding.
-
-#### Behavior: Skip-Details vs. Standard Referral Codes
-
-The behavior when the customer lands on this URL depends on how the referral code is configured:
-
-| Referral Code Type | What Happens |
-|--------------------|-------------|
-| **skip-details enabled** | The nift card is **automatically activated** using the provided parameters. The customer skips the details form entirely and goes straight to browsing gift categories. |
-| **standard (skip-details disabled)** | The provided parameters **pre-fill the details form**. The customer still reviews and submits the form before the nift card is activated. |
-
-</details>
-
----
-
-### Partner API
-
-Use this path when your backend activates nift cards programmatically on behalf of customers.
-
-<details>
-<summary>more information</summary>
-
-#### Endpoint
-
-```
-POST /api/v{version}/partners/nift_cards/{code}/activations
-Content-Type: application/json
-Authorization: Bearer <oauth_token>
-```
-
-#### Request Body
-
-```json
-{
-  "loyal_customer": {
-    "email": "<encrypted_email_or_plaintext>",
-    "first_name": "Jane",
-    "last_name": "Doe",
-    "zipcode": "02116"
-  }
-}
-```
-
-| Field | Required | Description |
-|-------|----------|-------------|
-| `loyal_customer.email` | Yes | Encrypted email (output of the encryption process above) or plaintext email |
-| `loyal_customer.first_name` | Yes | Customer's first name |
-| `loyal_customer.last_name` | Yes | Customer's last name |
-| `loyal_customer.zipcode` | Yes | Customer's zip code |
-
-#### Example with encrypted email
-
-```json
-{
-  "loyal_customer": {
-    "email": "eyJpdiI6Ii4uLiIsImNpcGhlcnRleHQiOiIuLi4iLCJ0YWciOiIuLi4ifQ",
-    "first_name": "Jane",
-    "last_name": "Doe",
-    "zipcode": "02116"
-  }
-}
-```
-
-#### How It Works
-
-1. Your server encrypts the customer's email using the shared key
-2. Your server sends a `POST` request with the encrypted email in the `loyal_customer` object
-3. Nift detects whether the email is plaintext (contains `@`) or encrypted (no `@`)
-4. If encrypted, Nift decrypts it server-side using the shared key
-5. The nift card is activated and a response is returned with the card details
 
 </details>
 
