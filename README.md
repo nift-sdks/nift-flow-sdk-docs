@@ -17,5 +17,12 @@ Nift provides SDKs for partners to integrate the Nift gift redemption flow direc
 
 
 
+### Encrypted Email
+[Encrypting Values](docs/encrypting_values.md) - How to encrypt sensitive fields with AES-256-GCM
+
+[Nift Web Flow](docs/encrypted_email_web_flow.md) - Passing encrypted email via referral links
+
+[Nift SDK](docs/encrypted_email_sdk.md) - Passing encrypted email via SDKs
+
 ### Other Docs
 [Referral Codes](docs/referral_codes.md)
