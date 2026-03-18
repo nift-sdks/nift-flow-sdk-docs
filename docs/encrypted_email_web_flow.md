@@ -2,7 +2,7 @@
 
 ## Overview
 
-Partners can pass an encrypted email address (along with other customer details) as query parameters in the Nift gift card referral link. This is the browser-based flow where customers are redirected to the Nift website to claim their gift.
+Partners can pass an encrypted email address (along with other customer details) as query parameters in the Nift card referral link. This is the browser-based flow where customers are redirected to the Nift website to claim their gift.
 
 For how to encrypt the email value, see [Encrypting Values with AES-256-GCM](encrypting_values.md).
 

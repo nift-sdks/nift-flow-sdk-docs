@@ -1,9 +1,9 @@
 # Referral Codes
 ## Overview
-Nift Partner Referral Link, lets Nift partners provide $30 Nift Gift Cards to their customers by referring customers to the Nift service with partner specific code.
+Nift Partner Referral Link, lets Nift partners provide $30 Nift Cards to their customers by referring customers to the Nift service with partner specific code.
 
 ### Referral Link
-To give a $30 Nift Gift Card to customers, the Nift partner should refer the customer to the dedicated link Nift provided to you.
+To give a $30 Nift Card to customers, the Nift partner should refer the customer to the dedicated link Nift provided to you.
 
 The customer will be referred to a page that will ask the customers to enter their name, email and possibly zipcode.
 
