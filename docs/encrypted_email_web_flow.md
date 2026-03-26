@@ -53,4 +53,4 @@ The behavior when the customer lands on this URL depends on how the referral cod
 
 ## Alternative: Encrypted Customer Data
 
-Instead of encrypting just the email and passing other fields as plaintext query parameters, you can bundle all customer fields into a single encrypted `customer_data` parameter. See [Encrypted Customer Data in the Nift Web Flow](encrypted_customer_data_web_flow.md).
+Instead of encrypting just the email and passing other fields as plaintext query parameters, you can bundle all customer fields into a single encrypted `enc` parameter. See [Encrypted Customer Data in the Nift Web Flow](encrypted_customer_data_web_flow.md).
