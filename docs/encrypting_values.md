@@ -2,9 +2,15 @@
 
 ## Overview
 
-To protect sensitive customer data in transit, we support encrypting fields (such as `email`) using **AES-256-GCM** symmetric encryption. This encryption format is used across all Nift integration paths:
+To protect sensitive customer data in transit, we support encrypting fields using **AES-256-GCM** symmetric encryption. You can encrypt:
 
-- [Nift Web Flow](encrypted_email_web_flow.md) — referral links with query parameters
+- A **single value** (e.g., an email address) — passed as the `email` query parameter or SDK field
+- **Multiple customer fields** bundled into a single JSON blob — passed as the `customer_data` query parameter
+
+This encryption format is used across all Nift integration paths:
+
+- [Nift Web Flow — Encrypted Email](encrypted_email_web_flow.md) — single encrypted email via referral links
+- [Nift Web Flow — Encrypted Customer Data](encrypted_customer_data_web_flow.md) — multiple encrypted fields via referral links
 - [Nift SDK](encrypted_email_sdk.md) — SDK initialization
 
 ## What We Provide
@@ -230,10 +236,58 @@ public String encryptValue(String value, String base64Key) throws Exception {
 
 </details>
 
+## Encrypting Multiple Fields (`customer_data`)
+
+The `customer_data` parameter lets you encrypt multiple customer fields in a single blob. The process is the same as above, except the **plaintext** you encrypt is a JSON string instead of a raw value.
+
+### Supported fields
+
+| Field | Description |
+|-------|-------------|
+| `email` | Customer's email address |
+| `first_name` | Customer's first name |
+| `last_name` | Customer's last name |
+| `postal_code` | Customer's postal/zip code |
+
+### Steps
+
+1. Build a JSON object with the customer fields you want to include (all fields are optional):
+
+    ```json
+    {
+      "email": "user@example.com",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "postal_code": "02116"
+    }
+    ```
+
+2. Treat this JSON **string** as the plaintext and follow the same [encryption steps above](#how-to-encrypt).
+
+3. Pass the result as the `customer_data` query parameter.
+
+For example, using the Python function from the code examples:
+
+```python
+import json
+
+customer_fields = json.dumps({
+    "email": "user@example.com",
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "postal_code": "02116",
+})
+
+encrypted = encrypt_value(customer_fields, base64_key)
+# Use as: ?customer_data={encrypted}
+```
+
+For full usage details, see [Encrypted Customer Data in the Nift Web Flow](encrypted_customer_data_web_flow.md).
+
 ## Important Notes
 
 *   **Never reuse an IV** with the same key. Generate a fresh random 12-byte IV for every encryption.
-*   **Plaintext fallback**: If you send an unencrypted email (containing `@`), it will be accepted as-is. This allows gradual rollout.
+*   **Plaintext fallback (email only)**: If you send an unencrypted email (containing `@`) via the `email` parameter, it will be accepted as-is. This allows gradual rollout. This does **not** apply to `customer_data`, which is always treated as encrypted.
 *   **Plaintext detection**: The `@` character is not part of Base64 or Base64url, so the system reliably distinguishes plaintext email addresses from encrypted blobs by checking for the presence of `@`.
 *   **Tag length**: Always use a 128-bit (16-byte) authentication tag. This is the GCM default and maximum.
 *   **No padding characters**: Base64url encoding should NOT include `=` padding characters.
