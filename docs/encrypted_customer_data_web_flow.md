@@ -23,7 +23,7 @@ The plaintext JSON inside the encrypted `customer_data` blob supports these fiel
 | `email` | No | Customer's email address |
 | `first_name` | No | Customer's first name |
 | `last_name` | No | Customer's last name |
-| `postal_code` | No | Customer's postal/zip code |
+| `zipcode` | No | Customer's postal/zip code |
 
 All fields are optional — include whichever fields you have available. Unknown fields are ignored.
 
@@ -40,13 +40,13 @@ All fields are optional — include whichever fields you have available. Unknown
   "email": "jane@example.com",
   "first_name": "Jane",
   "last_name": "Doe",
-  "postal_code": "02116"
+  "zipcode": "02116"
 }
 ```
 
 ### Step 2: Encrypt the JSON string
 
-Use the same AES-256-GCM encryption process described in [Encrypting Values](encrypting_values.md). The **plaintext** input is the JSON string from step 1 (e.g., `"{\"email\":\"jane@example.com\",\"first_name\":\"Jane\",\"last_name\":\"Doe\",\"postal_code\":\"02116\"}"`).
+Use the same AES-256-GCM encryption process described in [Encrypting Values](encrypting_values.md). The **plaintext** input is the JSON string from step 1 (e.g., `"{\"email\":\"jane@example.com\",\"first_name\":\"Jane\",\"last_name\":\"Doe\",\"zipcode\":\"02116\"}"`).
 
 ### Step 3: Pass the encrypted value in the URL
 
@@ -110,6 +110,6 @@ The behavior when the customer lands on this URL depends on how the referral cod
 | **What's encrypted** | JSON object with multiple fields | Single email value |
 | **Plaintext detection** | Not supported — value is always treated as encrypted | If value contains `@`, treated as plaintext email |
 | **Number of encrypted params** | One blob for all fields | One per encrypted field |
-| **Supported fields** | `email`, `first_name`, `last_name`, `postal_code` | `email` only |
+| **Supported fields** | `email`, `first_name`, `last_name`, `zipcode` | `email` only |
 
 Both approaches can be used alongside each other. See [Encrypted Email in the Nift Web Flow](encrypted_email_web_flow.md) for the individual parameter approach.

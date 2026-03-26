@@ -247,7 +247,7 @@ The `customer_data` parameter lets you encrypt multiple customer fields in a sin
 | `email` | Customer's email address |
 | `first_name` | Customer's first name |
 | `last_name` | Customer's last name |
-| `postal_code` | Customer's postal/zip code |
+| `zipcode` | Customer's postal/zip code |
 
 ### Steps
 
@@ -258,7 +258,7 @@ The `customer_data` parameter lets you encrypt multiple customer fields in a sin
       "email": "user@example.com",
       "first_name": "Jane",
       "last_name": "Doe",
-      "postal_code": "02116"
+      "zipcode": "02116"
     }
     ```
 
@@ -275,7 +275,7 @@ customer_fields = json.dumps({
     "email": "user@example.com",
     "first_name": "Jane",
     "last_name": "Doe",
-    "postal_code": "02116",
+    "zipcode": "02116",
 })
 
 encrypted = encrypt_value(customer_fields, base64_key)
