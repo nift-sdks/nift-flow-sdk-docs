@@ -50,3 +50,7 @@ The behavior when the customer lands on this URL depends on how the referral cod
 |--------------------|-------------|
 | **skip-details enabled** | The nift card is **automatically activated** using the provided parameters. The customer skips the details form entirely and goes straight to browsing gift categories. |
 | **standard (skip-details disabled)** | The provided parameters **pre-fill the details form**. The customer still reviews and submits the form before the nift card is activated. |
+
+## Alternative: Encrypted Customer Data
+
+Instead of encrypting just the email and passing other fields as plaintext query parameters, you can bundle all customer fields into a single encrypted `enc` parameter. See [Encrypted Customer Data in the Nift Web Flow](encrypted_customer_data_web_flow.md).

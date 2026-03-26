@@ -15,11 +15,13 @@ Nift provides SDKs for partners to integrate the Nift gift redemption flow direc
 
 [Customer Status Server API](sdk/customer-status-server.md) - Backend API integration
 
-## Encrypted Email
+## Encryption
 
 ---
 [Encrypting Values](encrypting_values.md) - How to encrypt sensitive fields with AES-256-GCM
 
-[Nift Web Flow](encrypted_email_web_flow.md) - Passing encrypted email via referral links
+[Nift Web Flow — Encrypted Email](encrypted_email_web_flow.md) - Passing encrypted email via referral links
+
+[Nift Web Flow — Encrypted Customer Data](encrypted_customer_data_web_flow.md) - Passing multiple encrypted fields via referral links
 
 [Nift SDK](encrypted_email_sdk.md) - Passing encrypted email via SDKs
