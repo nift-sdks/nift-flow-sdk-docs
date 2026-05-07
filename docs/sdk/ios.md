@@ -11,7 +11,7 @@ import NiftCardFlow
 
 NiftCardFlow.install()
 ```
-This sets up all adapaters and dependencies. Thie Nift Card flow will not work if this is not called.
+This sets up all adapaters and dependencies. The Nift Card flow will not work if this is not called.
 
 To show the view, call `NiftCardFlowView`. 
 ```swift
@@ -22,19 +22,21 @@ NiftCardFlowView(config: niftCardFlowConfig)
 
 To use with UIKit, pass the SwiftUI view to a `UIHostingController`.
 ```swift
+import NiftCardFlowSource
+
 let view = NiftCardFlowView(config: niftCardFlowConfig)
 UIHostingController(rootView: view)
 ```
 
-The `NiftCardFlowConfig` uses a few things for initialization: a `CustomerInfo` instance, `referralCode` (String), `clientID` (String), `isDarkTheme` (optional Bool), and `fontFamily` (optional) `NiftFont` instance.
+The `NiftCardFlowConfig` uses a few things for initialization: a `CustomerInfo` instance, `referralCode` (String), `clientID` (String), `isDarkTheme` (optional Bool), and `fontFamily` (optional `NiftFont`) instance for defining a custom font to use in the Nift Card flow.
 
-The `CustomerInfo` type contains the customer (first name, last name, email, and an optional zipcode) and optional fields country code, preferred language, whether the user has passed minimum drinking age or not, and a profile has for any extra info that will help select better gifts for the customer. And the `NiftFont` type allows deifing a custom font family to show in the Nift Card flow.
+The `CustomerInfo` type contains the customer (first name, last name, email, and an optional zipcode) and optional fields country code, preferred language, whether the user has passed minimum drinking age or not, and a profile for any extra info that will help us select better gifts for the customer.
 
 ```swift
-NiftCardFlowConfig(customerInfo: CustomerInfo, referralCode: String, clientId: String, isDarkTheme: Bool = false)
+NiftCardFlowConfig(customerInfo: CustomerInfo, referralCode: String, clientId: String, isDarkTheme: Bool = false, fontFamily: NiftFont? = nil)
 ```
 
-* Detailed type info is listed below.
+\* Detailed type info is listed below.
 
 All together, creating the view looks like the following:
 ```swift
