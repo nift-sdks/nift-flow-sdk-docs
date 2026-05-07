@@ -5,8 +5,18 @@ Nift's iOS SDK for the Nift Card Flow
 
 Our iOS SDKs gives access to a few classes and structs to support instantiating and using the nift card flow (Swift UI).
 
+Before anything else is called, Nift modules must first be installed
+```swift
+import NiftCardFlow
+
+NiftCardFlow.install()
+```
+This sets up all adapaters and dependencies. Thie Nift Card flow will not work if this is not called.
+
 To show the view, call `NiftCardFlowView`. 
 ```swift
+import NiftCardFlowSource
+
 NiftCardFlowView(config: niftCardFlowConfig)
 ```
 
@@ -16,9 +26,9 @@ let view = NiftCardFlowView(config: niftCardFlowConfig)
 UIHostingController(rootView: view)
 ```
 
-The `NiftCardFlowConfig` uses a few things for initialization: a `CustomerInfo` instance, `referralCode` (String), `clientID` (String),  and `isDarkTheme` (optional Bool).
+The `NiftCardFlowConfig` uses a few things for initialization: a `CustomerInfo` instance, `referralCode` (String), `clientID` (String), `isDarkTheme` (optional Bool), and `fontFamily` (optional) `NiftFont` instance.
 
-The `CustomerInfo` type contains the customer (first name, last name, email, and an optional zipcode) and optional fields country code, preferred language, whether the user has passed minimum drinking age or not, and a profile has for any extra info that will help select better gifts for the customer.
+The `CustomerInfo` type contains the customer (first name, last name, email, and an optional zipcode) and optional fields country code, preferred language, whether the user has passed minimum drinking age or not, and a profile has for any extra info that will help select better gifts for the customer. And the `NiftFont` type allows deifing a custom font family to show in the Nift Card flow.
 
 ```swift
 NiftCardFlowConfig(customerInfo: CustomerInfo, referralCode: String, clientId: String, isDarkTheme: Bool = false)
@@ -99,7 +109,7 @@ via Xcode:
 
 or add the following to your Package.swift
 ```
-.package(url: "https://oauth2:{GITHUB_TOKEN}@github.com/nift-sdks/nift-card-flow-ios.git", from: "2.9.3")
+.package(url: "https://oauth2:{GITHUB_TOKEN}@github.com/nift-sdks/nift-card-flow-ios.git", from: "3.0.10")
 ```
 
 ## Types
@@ -132,3 +142,11 @@ or add the following to your Package.swift
 
 ### NiftLanguage
 `.en | .fr`
+
+### NiftFont
+| name        | type   | default      |
+|:------------|:-------|:-------------|
+| `regular` | string | - (required) |
+| `bold`  | string | - (required) |
+| `semiBold`     | string | - (optional) defaults to bold |
+| `extraBold`   | string | - (optional) defaults to bold |
