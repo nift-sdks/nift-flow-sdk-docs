@@ -24,7 +24,7 @@ await NiftWebSDK.init({
     email: 'john.doe@example.com' // required
   },
   code: 'REFERRAL_CODE', // required: Your partner referral code (same for all customers)
-  region: 'us', // optional: 'us' (default) or 'uk'
+  countryCode: 'US', // optional: ISO country code (default: 'US')
 });
 ```
 
@@ -60,9 +60,29 @@ This approach keeps customers engaged within your application while still provid
 | `customer.lastName` | string | No | Customer's last name |
 | `customer.email` | string | Yes | Customer's email address |
 | `code` | string | Yes | Your partner referral code (same for all customers) |
-| `region` | string | No | Regional endpoint: `'us'` (default) or `'uk'`. Routes API calls to the correct regional system. |
+| `countryCode` | string | No | ISO country code for regional routing (e.g., `'US'`, `'GB'`, `'AU'`, `'CA'`). Defaults to `'US'`. |
+| `region` | string | No | **Deprecated** — use `countryCode` instead. Legacy alias: `'us'` (default) or `'uk'`. |
 | `skipOffer` | boolean | No | Skip the offer screen and go directly to the Nift gift flow (default: `false`) |
 | `showClose` | boolean | No | Show a close button (X) at the top right of the modal (default: `false`) |
+| `encryptedOriginDomain` | string | No | Your origin domain (e.g. `example.com`), AES-256-GCM encrypted. When provided, Nift decrypts it and verifies it as an approved origin. Encrypt on your server — see [Encrypting Values with AES-256-GCM](../encrypting_values.md). |
+
+#### Encrypted Origin Domain
+
+`encryptedOriginDomain` is optional. It lets Nift verify the request origin without a static origin allowlist: pass your origin domain as an AES-256-GCM encrypted value and Nift decrypts and verifies it during activation.
+
+> **Note:** Encryption must happen in a safe environment, since the shared secret key must never be exposed in client-side code. Encrypt the domain where the key stays protected and pass the encrypted value to the SDK. See [Encrypting Values with AES-256-GCM](../encrypting_values.md) for the encryption recipe.
+
+```javascript
+await NiftWebSDK.init({
+  clientId: 'YOUR_CLIENT_ID',
+  customer: {
+    email: 'john.doe@example.com',
+  },
+  code: 'REFERRAL_CODE',
+  // optional: encrypted origin domain
+  encryptedOriginDomain: 'eyJpdiI6Ii4uLiIsImNpcGhlcnRleHQiOiIuLi4iLCJ0YWciOiIuLi4ifQ',
+});
+```
 
 ### Modal Options
 
@@ -93,15 +113,17 @@ This approach keeps customers engaged within your application while still provid
 
 ### Multi-Region Support
 
-If your integration spans multiple regions, use the `region` parameter to route API calls to the correct Nift system. Each region has its own Client ID and referral code.
+If your integration spans multiple regions, use the `countryCode` parameter to route API calls to the correct Nift system. Each region has its own Client ID and referral code.
 
-| Region | Value | Endpoint |
-|--------|-------|----------|
-| United States / Canada | `'us'` (default) | gonift.com |
-| United Kingdom | `'uk'` | gonift.co.uk |
+| Country Code | Country | Region |
+|-------------|---------|--------|
+| `'US'` | United States | North America (default) |
+| `'CA'` | Canada | North America |
+| `'GB'` | United Kingdom | Europe |
+| `'AU'` | Australia | Asia-Pacific |
 
 ```javascript
-// US integration (default — region can be omitted)
+// US integration (default — countryCode can be omitted)
 await NiftWebSDK.init({
   clientId: 'YOUR_US_CLIENT_ID',
   code: 'US_REFERRAL_CODE',
@@ -112,12 +134,22 @@ await NiftWebSDK.init({
 await NiftWebSDK.init({
   clientId: 'YOUR_UK_CLIENT_ID',
   code: 'UK_REFERRAL_CODE',
-  region: 'uk',
+  countryCode: 'GB',
+  customer: { email: 'john@example.com' },
+});
+
+// Australia integration
+await NiftWebSDK.init({
+  clientId: 'YOUR_AU_CLIENT_ID',
+  code: 'AU_REFERRAL_CODE',
+  countryCode: 'AU',
   customer: { email: 'john@example.com' },
 });
 ```
 
-> **Note:** US is the default region. If you only operate in the US or Canada, you do not need to specify `region`.
+> **Note:** US is the default region. If you only operate in the US or Canada, you do not need to specify `countryCode`.
+
+> **Note:** The `region` parameter (`'us'` | `'uk'`) is still accepted for backward compatibility but is deprecated. New integrations should use `countryCode`.
 
 ## Complete Examples
 
