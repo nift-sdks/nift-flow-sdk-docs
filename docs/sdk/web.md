@@ -64,11 +64,11 @@ This approach keeps customers engaged within your application while still provid
 | `region` | string | No | **Deprecated** — use `countryCode` instead. Legacy alias: `'us'` (default) or `'uk'`. |
 | `skipOffer` | boolean | No | Skip the offer screen and go directly to the Nift gift flow (default: `false`) |
 | `showClose` | boolean | No | Show a close button (X) at the top right of the modal (default: `false`) |
-| `encryptedOriginDomain` | string | No | Your origin domain (e.g. `example.com`), AES-256-GCM encrypted. When provided, Nift decrypts it and verifies it as an approved origin. Encrypt on your server — see [Encrypting Values with AES-256-GCM](../encrypting_values.md). |
+| `encryptedOrigin` | string | No | Your origin domain (e.g. `example.com`), AES-256-GCM encrypted. When provided, Nift decrypts it and verifies it as an approved origin. Encrypt it in a safe environment — see [Encrypting Values with AES-256-GCM](../encrypting_values.md). |
 
-#### Encrypted Origin Domain
+#### Encrypted Origin
 
-`encryptedOriginDomain` is optional. It lets Nift verify the request origin without a static origin allowlist: pass your origin domain as an AES-256-GCM encrypted value and Nift decrypts and verifies it during activation.
+`encryptedOrigin` is optional. It lets Nift verify the request origin without a static origin allowlist: pass your origin domain as an AES-256-GCM encrypted value and Nift decrypts and verifies it during activation.
 
 > **Note:** Encryption must happen in a safe environment, since the shared secret key must never be exposed in client-side code. Encrypt the domain where the key stays protected and pass the encrypted value to the SDK. See [Encrypting Values with AES-256-GCM](../encrypting_values.md) for the encryption recipe.
 
@@ -80,7 +80,7 @@ await NiftWebSDK.init({
   },
   code: 'REFERRAL_CODE',
   // optional: encrypted origin domain
-  encryptedOriginDomain: 'eyJpdiI6Ii4uLiIsImNpcGhlcnRleHQiOiIuLi4iLCJ0YWciOiIuLi4ifQ',
+  encryptedOrigin: 'eyJpdiI6Ii4uLiIsImNpcGhlcnRleHQiOiIuLi4iLCJ0YWciOiIuLi4ifQ',
 });
 ```
 
