@@ -1,4 +1,4 @@
-# Partners Customer Anonymization API
+# Partners Customer Deletion API
 
 Our server-side API lets partners submit customer deletion requests on behalf of their customers.
 Requests are fulfilled by **anonymization**: Nift scrubs and replaces the customer's personal data
@@ -14,7 +14,7 @@ Form Data Needed:
 grant_type: client_credentials
 client_id: [given by Nift]
 client_secret: [given by Nift]
-scope: write:anonymizations
+scope: write:customers
 ```
 
 Posting to this endpoint returns json similar to the following:
@@ -23,7 +23,7 @@ Posting to this endpoint returns json similar to the following:
     "access_token": "12345679hdvjkkg",
     "token_type": "Bearer",
     "expires_in": 31556952,
-    "scope": "write:anonymizations",
+    "scope": "write:customers",
     "created_at": 1679447338
 }
 ```
@@ -31,10 +31,10 @@ Posting to this endpoint returns json similar to the following:
 > **Note:** Tokens are long-lived (about one year). Store the token server-side and request a new
 > one when it expires. Never expose your client secret or access tokens in browsers or mobile apps.
 
-## Submitting Anonymization Requests
+## Submitting Deletion Requests
 Once you have a valid (unexpired) access token, submit one or many customer email addresses.
 
-`post` to https://www.gonift.com/api/v2026-07/partners/customers/anonymizations
+`post` to https://www.gonift.com/api/v2026-07/partners/customers/deletions
 
 Header Needed:
 ```
@@ -66,9 +66,9 @@ A successful request returns `202 Accepted` acknowledging receipt:
 | Field | Description |
 |-------|-------------|
 | `received_count` | Number of email addresses received in this request. |
-| `queued_count` | Number of addresses newly queued for anonymization. This is `received_count` minus any addresses that were invalid, duplicated within the same request, or already queued by a previous request that has not finished processing yet. |
+| `queued_count` | Number of addresses newly queued for deletion. This is `received_count` minus any addresses that were invalid, duplicated within the same request, or already queued by a previous request that has not finished processing yet. |
 
-> **Note:** The response is a receipt only. Anonymization happens asynchronously after this
+> **Note:** The response is a receipt only. Deletion happens asynchronously after this
 > response. `queued_count` reflects only the de-duplication and validation of your own submission
 > — it never discloses whether an email address belongs to a Nift customer, and there is no
 > per-address result.
@@ -79,8 +79,8 @@ A successful request returns `202 Accepted` acknowledging receipt:
 |--------|-------|------|
 | `400` | `invalid_request` | `emails` is missing, not an array, empty, longer than 500 entries, or contains non-string values. |
 | `401` | `invalid_token` | The access token is missing, invalid, or expired. |
-| `403` | `insufficient_scope` | The token does not have the `write:anonymizations` scope. |
-| `403` | `integration_not_configured` | Your application is not set up for anonymization requests — contact Nift. |
+| `403` | `insufficient_scope` | The token does not have the `write:customers` scope. |
+| `403` | `integration_not_configured` | Your application is not set up for deletion requests — contact Nift. |
 
 Authentication failures (`invalid_token`, `insufficient_scope`) return an **empty body**; the
 error code and description are carried in the `WWW-Authenticate` response header, per the OAuth2
@@ -101,7 +101,7 @@ The other errors return a json body with an `error` code and a human-readable
 ```
 
 ## Behavior
-- Anonymization runs asynchronously in the background; the `202` response does not wait for
+- Deletion runs asynchronously in the background; the `202` response does not wait for
   processing to finish.
 - One malformed address never rejects the batch — it is ignored, and the valid addresses in the
   same request are still queued.
