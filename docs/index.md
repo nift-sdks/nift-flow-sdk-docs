@@ -15,6 +15,8 @@ Nift provides SDKs for partners to integrate the Nift gift redemption flow direc
 
 [Customer Status Server API](sdk/customer-status-server.md) - Backend API integration
 
+[Customer Anonymization API](sdk/customer-anonymization-api.md) - Server API for submitting customer deletion/anonymization requests
+
 ## Encryption
 
 ---
