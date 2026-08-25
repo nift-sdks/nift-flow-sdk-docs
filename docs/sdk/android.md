@@ -107,7 +107,7 @@ In Android Studio:
 3. Enter the package name and version
    ```
    dependencies {
-       implementation 'com.nift:nift-card-flow:2.2.6'
+       implementation 'com.nift:nift-card-flow:2.3.7'
    }
    ```
 4. Sync
@@ -138,7 +138,7 @@ In Android Studio:
 | `zipcode`   | string | - (optional) |
 
 ### NiftCountry
-`US | CA | GB` 
+`US | CA | GB | AU` 
 
 ### NiftLanguage
 `en | fr`
