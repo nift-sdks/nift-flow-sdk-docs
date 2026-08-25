@@ -140,7 +140,7 @@ or add the following to your Package.swift
 | `zipcode`   | string | - (optional) |
 
 ### NiftCountry
-`.US | .CA | .GB | AU` 
+`.US | .CA | .GB | .AU` 
 
 ### NiftLanguage
 `.en | .fr`
