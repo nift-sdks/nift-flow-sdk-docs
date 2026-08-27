@@ -63,6 +63,7 @@ To handle the look and feel of toast messages, call `connectToastHandler`.
 suspend fun connectToastHandler(): Flow<String>
 ```
 **Note:** Calling this will disable default toast message handling. To enable the default toast message handling again, please call `disconnectToastHandler`.
+**Note:** Because the nift card flow view has fixed elements that should not move, DO NOT PLACE THE NIFT CARD FLOW VIEW IN A SCROLLABLE VIEW. The library itself handles scrolling.
 
 To control how URLs are opened/displayed, please call `connectLinkHandler`.
 ```kotlin
