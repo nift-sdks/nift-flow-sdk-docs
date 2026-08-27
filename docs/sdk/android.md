@@ -36,6 +36,7 @@ val context = requireContext()
 val config = NiftCardFlowConfig(context, customerInfo, "referralcode1234", "12345")
 val fragment =  NiftCardFlowFragment(config)
 ```
+**Note:** Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
 
 And creating the screen looks like the following:
 ```kotlin
@@ -47,8 +48,7 @@ fun ComposableView(...) {
   NiftCardFlowScreen(config)
 }
 ```
-
-**Note:** Please keep in mind that referral code and client ID are subject to change and should not be hard coded.
+**Note:** Because the nift card flow view has fixed elements that should not move, DO NOT PLACE THE NIFT CARD FLOW VIEW IN A SCROLLABLE VIEW. The library itself handles scrolling.
 
 ### Additional Functions
 In the NiftCardFlowConfig, there are optional functions that can be called, many of which can be used for callbacks (with Kotlin Flow).
