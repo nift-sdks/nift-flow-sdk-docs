@@ -112,6 +112,7 @@ const selectionHandler: () => {
                   selectionHandler={selectionHandler}
                   isDarkTheme={false} />
 ```
+**Note:** Because the nift card flow view has fixed elements that should not move, DO NOT PLACE THE NIFT CARD FLOW VIEW IN A SCROLLABLE VIEW. The library itself handles scrolling.
 
 **Error Handling**
 
