@@ -27,6 +27,7 @@ import NiftCardFlowSource
 let view = NiftCardFlowView(config: niftCardFlowConfig)
 UIHostingController(rootView: view)
 ```
+**Note:** Because the nift card flow view has fixed elements that should not move, DO NOT PLACE THE NIFT CARD FLOW VIEW IN A SCROLLABLE VIEW. The library itself handles scrolling.
 
 The `NiftCardFlowConfig` uses a few things for initialization: a `CustomerInfo` instance, `referralCode` (String), `clientID` (String), `isDarkTheme` (optional Bool), and `fontFamily` (optional `NiftFont`) instance for defining a custom font to use in the Nift Card flow.
 
