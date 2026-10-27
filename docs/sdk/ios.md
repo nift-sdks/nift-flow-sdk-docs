@@ -126,7 +126,7 @@ or add the following to your Package.swift
 | `passedMLDA`    | Bool      | - (optional)      |
 
 - `passedMLDA`: whether the user is of minimum legal drinking age or not.
-- `countryCode`: ISO 2 letter country code. Right now only the US, Canada, and the UK are supported. Defaults to the US.
+- `countryCode`: ISO 2 letter country code. Right now only the US, Canada, Australia, and the UK are supported. Defaults to the US.
 - `language`: language code. Right now only english and french are supported. Defaults to english.**\***
 - `profile`: any user info you want to attach to the customer in Nift to provide better gifts. If used, this must be a hash.
 
